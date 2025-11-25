@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &998792490444988325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8408141477944625983}
+  - component: {fileID: 5822889586429952689}
+  m_Layer: 0
+  m_Name: Wall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8408141477944625983
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998792490444988325}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5822889586429952689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998792490444988325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07dc5855dcf05fd4ba6e16f6f85cfb47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallObject
+  ObstacleTile:
+  - {fileID: 11400000, guid: 92bdd13f00b73d14b815a7fa1694a7e8, type: 2}
+  - {fileID: 11400000, guid: c00dd7c7bf2e3b043808e15b085a8882, type: 2}
+  - {fileID: 11400000, guid: 2450e1a64f2350b4e803356e73d665e8, type: 2}
+  - {fileID: 11400000, guid: c61ade18658ce1f43989295a31676d52, type: 2}
+  - {fileID: 11400000, guid: f73fc5de4b0b766438b24004091c61f4, type: 2}
+  - {fileID: 11400000, guid: 2e19ce5e220cd404499d22cbef6e3764, type: 2}
+  - {fileID: 11400000, guid: f5341575e8aa6bc4d9058e2a8f81b3f5, type: 2}
+  DamageTile:
+  - {fileID: 11400000, guid: 480d3afc08f98ea40a8335dd90a32232, type: 2}
+  - {fileID: 11400000, guid: 8edbafadd818060418e583a262c0aa02, type: 2}
+  - {fileID: 11400000, guid: c57712ffafb0cfe469004359b6a3e871, type: 2}
+  - {fileID: 11400000, guid: b72afdb2b71d3354caac6e09d6b37494, type: 2}
+  - {fileID: 11400000, guid: 259ca363da4cf304eaf02391a4f610f9, type: 2}
+  - {fileID: 11400000, guid: e5cf315f7435e474dbe665bddc77197e, type: 2}
+  - {fileID: 11400000, guid: 459ebfe14233b09438ca8b5dd4b5b88f, type: 2}
+  MaxHealth: 3
