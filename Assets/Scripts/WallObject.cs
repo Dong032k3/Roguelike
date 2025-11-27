@@ -19,8 +19,9 @@ public class WallObject : CellObject
     }
     public override bool PlayerWantsToEnter()
     {
-        m_HealthPoint -= 1;
-        if(m_HealthPoint <= 0)
+        PlayerController.Instance.TakeDamage();
+        m_HealthPoint -= PlayerController.Instance.m_Damage;
+        if(m_HealthPoint < 0)
         {
             GameManager.Instance.BoardManager.SetCellTile(m_Cell, m_OriginalTile);
             Destroy(gameObject);
@@ -29,6 +30,12 @@ public class WallObject : CellObject
         else if (m_HealthPoint == 1)
         {
             GameManager.Instance.BoardManager.SetCellTile(m_Cell, DamageTile[X]);
+            return false;
+        }
+        else if(m_HealthPoint == 0)
+        {
+            GameManager.Instance.BoardManager.SetCellTile(m_Cell, m_OriginalTile);
+            Destroy(gameObject);
             return false;
         }
         else
