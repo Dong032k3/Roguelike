@@ -19,7 +19,7 @@ public class WallObject : CellObject
     }
     public override bool PlayerWantsToEnter()
     {
-        PlayerController.Instance.TakeDamage();
+        PlayerController.Instance.Attack();
         m_HealthPoint -= PlayerController.Instance.m_Damage;
         if(m_HealthPoint < 0)
         {

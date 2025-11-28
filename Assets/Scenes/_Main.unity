@@ -171,6 +171,7 @@ MonoBehaviour:
   - {fileID: 339256926862170157, guid: 523f6c022c6576c48975455de401749d, type: 3}
   - {fileID: 49701963158320244, guid: fcf83eae27f962d43a0d87513b4f60db, type: 3}
   - {fileID: -5566493335550963347, guid: 7e324156e639f33479a253eee731c36c, type: 3}
+  EnemyPrefabs: {fileID: 1486754831290121646, guid: 03fc330655f3cb54397405af9168b9b7, type: 3}
   WallPrefabs: {fileID: 5822889586429952689, guid: 8050c58577ea646489b7d6f8ae4be35d, type: 3}
   ExitCellPrefab: {fileID: 1268646239533483942, guid: 2db1e03d4f2db9045975926aa260116a, type: 3}
 --- !u!156049354 &88163574
@@ -632,6 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff4a9a3766c7714581ea3e48a25eca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  m_FoodAmout: 100
   BoardManager: {fileID: 88163573}
   PlayerController: {fileID: 1953849042}
   UIDoc: {fileID: 542955108}
@@ -739,6 +741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b6876c66e265344b3e83f0e948dcaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  m_Damage: 1
 --- !u!4 &1953849043
 Transform:
   m_ObjectHideFlags: 0
