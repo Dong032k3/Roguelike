@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Collections;
 
 public class Enemy : CellObject
 {
@@ -31,8 +32,10 @@ public class Enemy : CellObject
 
     public override bool PlayerWantsToEnter()
     {
+        PlayerController.Instance.m_IsAttack = true;
         PlayerController.Instance.Attack();
         m_CurrentHealth -= PlayerController.Instance.m_Damage;
+        TakeDamageEnemy();
 
         if (m_CurrentHealth < 0)
         {
@@ -71,59 +74,43 @@ public class Enemy : CellObject
         m_Cell = coord;
         m_MoveTargetEnemy = board.CellToWorld(m_Cell);
         m_IsMoving = true;
+        m_Animator.SetBool("Moving",true);
 
         return true;
     }
 
     void TurnHappened()
-    {
-        //We added a public property that return the player current cell!
-        var playerCell = GameManager.Instance.PlayerController.Cell;
-
-        int xDist = playerCell.x - m_Cell.x;
-        int yDist = playerCell.y - m_Cell.y;
-
-        int absXDist = Mathf.Abs(xDist);
-        int absYDist = Mathf.Abs(yDist);
-        bool m_Action = false;
-        if(m_Action){
-
-            if ((xDist == 0 && absYDist == 2)
-            || (yDist == 0 && absXDist == 2))
+    {
+        var playerCell = GameManager.Instance.PlayerController.Cell;
+        int xDist = playerCell.x - m_Cell.x;
+        int yDist = playerCell.y - m_Cell.y;
+        int absXDist = Mathf.Abs(xDist);
+        int absYDist = Mathf.Abs(yDist);
+        
+        if ((xDist == 0 && absYDist == 1)
+        || (yDist == 0 && absXDist == 1))
+        {
+            PlayerController.Instance.m_IsAttack = false;
+            AttackPlayer();
+        }
+        else
+        {
+            if (absXDist > absYDist)
             {
-                m_Action = false;
-                m_IsMoving = false;
-                m_Animator.SetBool("Moving",false);
+                if (!TryMoveInX(xDist))
+                {
+                    TryMoveInY(yDist);
+                }
+            }
+            else
+            {
+                if (!TryMoveInY(yDist))
+                {
+                    TryMoveInX(xDist);
+                }
             }
         }
-        else 
-        {
-            m_Action = true;
-            if ((xDist == 0 && absYDist == 1)
-            || (yDist == 0 && absXDist == 1))
-            {
-                //we are adjacent to the player, attack!
-                AttackPlayer();
-            }
-            else
-            {
-                if (absXDist > absYDist)
-                {
-                    if (!TryMoveInX(xDist))
-                    {
-                        TryMoveInY(yDist);
-                    }
-                }
-                else
-                {
-                    if (!TryMoveInY(yDist))
-                    {
-                        TryMoveInX(xDist);
-                    }
-                }
-            }
-        }
-    }
+    }
 
     bool TryMoveInX(int xDist)
     {
@@ -144,18 +131,38 @@ public class Enemy : CellObject
     }
     public void AttackPlayer()
     {
-        GameManager.Instance.ChangeFood(-m_DamageEnemy);
-        m_Animator.SetTrigger("Attack");
+        if(PlayerController.Instance.m_IsAttack == false)
+        {
+            GameManager.Instance.ChangeFood(-m_DamageEnemy);
+            m_Animator.SetTrigger("Attack");
+            Debug.Log("Enemy Attack");
+        }
+       
+    }
+    public void TakeDamageEnemy()
+    {
+        if(PlayerController.Instance.m_IsAttack == true)
+        {
+            m_Animator.Play("EnemyDamage");
+            StartCoroutine(ResetTakeDamageEnemy());
+        }
+        else
+        {
+            return;
+        }
+    }
+    IEnumerator ResetTakeDamageEnemy()
+    {
+        yield return new WaitForSeconds(0.2f);
+        m_Animator.Play("EnemyIdle");
+        
     }
     public void Update() {
         if(m_IsMoving)
         {
             transform.position = Vector3.MoveTowards(transform.position, m_MoveTargetEnemy, MoveSpeedEnemy * Time.deltaTime);
             // Kiểm tra nếu đã đến đích
-            if(GameManager.Instance.PlayerController.Cell.x == m_MoveTargetEnemy.x 
-            && Mathf.Abs(GameManager.Instance.PlayerController.Cell.y - m_MoveTargetEnemy.y) == 1
-            || GameManager.Instance.PlayerController.Cell.y == m_MoveTargetEnemy.y 
-            && Mathf.Abs(GameManager.Instance.PlayerController.Cell.x - m_MoveTargetEnemy.x) == 1)
+            if(transform.position == m_MoveTargetEnemy)
             {
                 m_IsMoving = false;
                 m_Animator.SetBool("Moving", false); 

@@ -46,6 +46,12 @@ public class BoardManager : MonoBehaviour
     {
         return m_Grid.GetCellCenterWorld((Vector3Int)cellIndex);
     }
+    public Vector2Int WorldToCell(Vector3 worldPos)
+    {
+        Vector3Int cell = m_Grid.WorldToCell(worldPos);
+        return new Vector2Int(cell.x, cell.y);
+    }
+
     // Chuyển từ chỉ số ô sang vị trí thế giới (Vector3) - dùng để đặt transform
     public void Init()
     {

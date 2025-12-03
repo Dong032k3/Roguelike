@@ -16,7 +16,8 @@ public class PlayerController : MonoBehaviour
     
     private bool m_IsMoving;           
     private Vector3 m_MoveTarget;       // Vị trí thực tế trong không gian 3D mà nhân vật cần đến
-    private int MoveSpeed = 5;       
+    private int MoveSpeed = 5;    
+    public bool m_IsAttack;   
     
     [SerializeField] public int m_Damage = 1; 
 
@@ -67,12 +68,14 @@ public class PlayerController : MonoBehaviour
         {
             // Di chuyển tức thời (Teleport) - Dùng khi mới Spawn
             m_IsMoving = false;
+            m_IsAttack = false;
             transform.position = m_Board.CellToWorld(m_CellPosition);
         }
         else
         {
             // Bắt đầu di chuyển mượt (Animation) - Dùng khi người chơi bấm nút
             m_IsMoving = true;
+            m_IsAttack = false;
             // Lấy vị trí thế giới thực của ô đích để nhân vật trượt tới
             m_MoveTarget = m_Board.CellToWorld(m_CellPosition);
         }
@@ -151,6 +154,7 @@ public class PlayerController : MonoBehaviour
         // 4. Thực hiện Animation di chuyển (Mỗi khung hình)
         if (m_IsMoving)
         {
+            m_IsAttack = false;
             // Dùng MoveTowards để dịch chuyển nhân vật từ từ đến vị trí đích
             transform.position = Vector3.MoveTowards(transform.position, m_MoveTarget, Time.deltaTime * MoveSpeed);
 
@@ -168,12 +172,26 @@ public class PlayerController : MonoBehaviour
                     cellData.ContainedObject.PlayerEntered();
                 }
             }
+            if (m_IsAttack)
+            {
+                m_IsMoving = false;
+                if(transform.position == m_MoveTarget)
+                {
+                    m_IsAttack = false;
+                }
+            }
             return;
+            
         }
     }
 
     public void Attack()
     {
-        m_Animator.SetTrigger("Attack");
+        if(m_IsAttack == true)
+        {
+            m_Animator.SetTrigger("Attack");
+            Debug.Log("player attack");
+        }
     }
+
 }
